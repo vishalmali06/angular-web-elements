@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" th:href="@{/}" style="padding-left: 15px">
+    Web Banking</a
+  >
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarCollapse"
+    aria-controls="navbarCollapse"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav">
+      <li
+        class="nav-item"
+        th:classappend="${#httpServletRequest.requestURI.equals('/user/list')} ? 'active' : ''"
+      >
+        <a routerLinkActive="active" class="nav-link" (click)="sendData('list')"
+          >User List</a
+        >
+      </li>
+      <li
+        class="nav-item"
+        th:classappend="${#httpServletRequest.requestURI.equals('/user/add')} ? 'active' : ''"
+      >
+        <a routerLinkActive="active" class="nav-link" (click)="sendData('add')"
+          >Add User</a
+        >
+      </li>
+    </ul>
+  </div>
+</nav>

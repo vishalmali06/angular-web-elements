@@ -1,0 +1,97 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.min.css";
+@import "~ngx-toastr/toastr.css";
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+   /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    background-color: #f5f5f5;
+}
+
+.container{
+    margin-bottom: 40px;
+    margin-top: 55px;
+}
+
+.jumbotron{
+    height: 60px;
+    line-height: 60px;
+    padding-left: 20px;
+    font-size: 30px;
+    text-align: left;
+    background-color: #f5f5f5;
+    margin-bottom: 30px;
+}
+
+.separation {
+    text-transform: uppercase;
+    color: #adadad;
+    position: relative;
+    padding: 0 15px;
+    margin-bottom: 20px;
+    padding-right: 0;
+}
+.separation:after {
+    content: "";
+    background: #adadad;
+    height: 1px;
+    left: 0;
+    right: 30px;
+    position: absolute;
+    top: 50%;
+}
+.separation .separation-content {
+    background: #fff;
+    padding: 0 10px;
+    position: relative;
+    z-index: 1;
+    display: inline;
+}
+.separation .separation-content .page-editor {
+    display: inline-block;
+    width: 100px;
+    margin-top: -10px;
+    height: 15px;
+}
+.separation.create:after {
+    right: 65px;
+}
+
+.normal-form form{
+    margin: 10px;
+}
+
+.controls-container{
+    width: 100%;
+}
+
+.controls-container > *{
+    width: 100%;
+    padding: 2%;
+}
+
+.mat-radio-group mat-radio-button{
+    margin-left: 30px;
+}
+
+.button-row button{
+    margin: 10px;
+}
+
+.add-bottom-padding{
+    padding: 5%;
+}
+
+.mat-icon {
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+}

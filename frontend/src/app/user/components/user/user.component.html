@@ -1,0 +1,159 @@
+<div class="jumbotron">
+    <span>{{pageTitle}}</span>
+</div>
+<div class="mb-5">
+    <div>
+        <form [formGroup]="user" (ngSubmit)="onSubmit()" class="row">
+            <div class="col-sm-6">
+                <div class="controls-container">
+                    <input type="hidden" formControlName="userId">
+                    <mat-form-field>
+                        <input formControlName="name" matInput placeholder="Full Name" (blur)="logValidatinErrors()">
+                        <mat-error>{{formErrors.name}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input formControlName="emailId" matInput placeholder="Email ID" (blur)="logValidatinErrors()">
+                        <mat-error>{{formErrors.emailId}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input formControlName="mobileNo" matInput placeholder="Mobile No." (blur)="logValidatinErrors()">
+                        <mat-error>{{formErrors.mobileNo}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="controls-container">
+                    <mat-form-field>
+                        <input formControlName="secondaryMobileNo" matInput placeholder="Secondary Mobile No." (blur)="logValidatinErrors()">
+                        <mat-error>{{formErrors.secondaryMobileNo}}</mat-error>
+                    </mat-form-field>
+
+                    <div class="add-bottom-padding">
+                        <mat-label >Gender</mat-label> 
+                        <mat-radio-group matInput formControlName="gender">
+                            <mat-radio-button *ngFor="let op of genderOptions" name="gender" [value]=op.value>{{ op.name}}</mat-radio-button>  
+                        </mat-radio-group>
+                        <mat-error>{{formErrors.gender}}</mat-error>
+                    </div>
+
+                    <mat-form-field>
+                        <input formControlName="dob" matInput [matDatepicker]="picker" [max]="maxDate" placeholder="Date of Birth" (blur)="logValidatinErrors()">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker startView="multi-year"></mat-datepicker>
+                        <mat-error>{{formErrors.dob}}</mat-error>
+                    </mat-form-field>
+                </div>  
+            </div>
+            <div class="row" *ngIf="!isView">
+                <div class="col-sm-6">
+                    <div class="my-4" *ngIf="isEdit">
+                        <button mat-raised-button color="primary" (click)="addAccountButtonClicked()"
+                        [disabled]="accounts.invalid" >Add New Account</button>
+                    </div>
+                    <div formArrayName="accounts" *ngFor="let account of accounts.controls; let i = index">
+                        <div [formGroupName]="i">
+                            <div class="account my-5">
+                                <div class="separation">
+                                    <div class="separation-content">
+                                        <span>Account Details</span>
+                                    </div>
+                                    <div class="position-absolute top-0 end-0" *ngIf="accounts.length > 1 && !isView">
+                                        <button
+                                            class="btn btn-link text-danger float-right btn-sm"
+                                            type="button"
+                                            title="Delete account"
+                                            (click)="delAccount(i)"
+                                        >
+                                            <fa-icon [icon] = "faTrashAlt"></fa-icon>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="controls-container">
+                                    <input type="hidden" formControlName="accountId">
+                                    <mat-form-field>
+                                        <input formControlName="branchName" matInput placeholder="Branch Name">
+                                        <mat-error *ngIf="(account.get('branchName')?.errors?.['pattern'] && 
+                                                account.get('branchName')?.dirty)">
+                                            Branch name should be atleast 3 and max 40 chars
+                                        </mat-error>
+                                        <mat-error *ngIf="accounts.get('branchName')?.touched || 
+                                                account.get('branchName')?.errors?.['required']">
+                                            Branch Name Required
+                                        </mat-error> 
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Account Type</mat-label>
+                                        <mat-select  formControlName="accountType" matInput>
+                                          <mat-option *ngFor="let type of AccountTypeOptions" [value]="type.value">
+                                            {{type.name}}
+                                          </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="account.get('accountType')?.touched ||
+                                                account.get('accountType')?.errors?.['required'] || 
+                                                account.get('accountType')?.dirty">
+                                            Account Type Required
+                                        </mat-error>
+                                    </mat-form-field>
+                
+                                    <mat-form-field>
+                                        <input formControlName="accountBalance" matInput placeholder="Account Balance">
+                                        <mat-error *ngIf="(account.get('accountBalance')?.errors?.['pattern'] &&
+                                        account.get('accountBalance')?.dirty)">
+                                            Account balance should be positive number
+                                        </mat-error>
+                                        <mat-error *ngIf="account.get('accountBalance')?.touched && 
+                                                account.get('accountBalance')?.errors?.['required']">
+                                            Account Balance Required
+                                        </mat-error>
+                                    </mat-form-field>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="row" id="table" *ngIf="isView">
+                    <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <thead class="table-active">
+                                <tr>
+                                    <th scope="col">Account Number</th>
+                                    <th scope="col">Branch Name</th>
+                                    <th scope="col">Account Type</th>
+                                    <th scope="col">Balance Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-row" *ngFor="let account of accountsList; let i = index" [attr.data-index]="i">        
+                                    <td>
+                                        {{account.accountId}}
+                                    </td>
+                                    <td>
+                                        {{account.branchName}}
+                                    </td>
+                                    <td>
+                                        {{account.accountType == "C" ? "Current" : "Saving"}} 
+                                    </td>
+                                    <td>
+                                        {{account.accountBalance}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="button-row d-flex justify-content-center" *ngIf="!isView">
+                <button mat-raised-button color="primary" type="submit" [disabled]="user.invalid">Save</button>
+                <button mat-raised-button color="warn" (click)="cancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div> 

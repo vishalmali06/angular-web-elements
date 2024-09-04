@@ -1,0 +1,92 @@
+<div>
+    <div class="dataTables_paginate paging_simple_numbers float-right">
+      <ul class="pagination">
+        <li
+          class="paginate_button page-item previous"
+          *ngIf="currentPage !== 0"
+        >
+          <a
+            (click)="onPageSelected(currentPage)"
+            aria-controls="users-list2"
+            data-dt-idx="0"
+            tabindex="0"
+            class="page-link"
+            >Previous</a
+          > 
+        </li>
+        <li
+            class="paginate_button page-item"
+            *ngIf="!range().includes(1)"
+          >
+            <a
+              (click)="onPageSelected(1)"
+              aria-controls="users-list"
+              data-dt-idx="1"
+              tabindex="0"
+              class="page-link"
+              >1</a
+            >
+          </li>
+          <li
+            class="paginate_button page-item disabled"
+            *ngIf="range()[0] != 1 && range()[0] != (1+1)"
+          >
+            <a
+              aria-controls="users-list"
+              class="page-link disabled"
+              >...</a
+            >
+          </li>
+        <div *ngFor="let n of range()">
+          <li
+            class="paginate_button page-item"
+            (key)="n"
+          >
+            <a
+              (click)="onPageSelected(n)"
+              aria-controls="users-list"
+              data-dt-idx="1"
+              tabindex="0"
+              class="page-link"
+              >{{ n }}</a
+            >
+          </li>
+        </div>
+        <li
+            class="paginate_button page-item disabled"
+            *ngIf="range()[range().length-1]!=totalPages && range()[range().length-1]!=(totalPages-1)"
+          >
+            <a
+              aria-controls="users-list"
+              class="page-link disabled"
+              >...</a>
+          </li>
+          <li
+            class="paginate_button page-item"
+            *ngIf="!range().includes(totalPages)"
+          >
+            <a
+              (click)="onPageSelected(totalPages)"
+              aria-controls="users-list"
+              data-dt-idx="1"
+              tabindex="0"
+              class="page-link"
+              >{{totalPages}}</a
+            >
+          </li>
+        <li
+          class="paginate_button page-item next "
+          *ngIf="currentPage !== totalPages - 1"
+        >
+          <a
+            (click)="onPageSelected(currentPage + 2)"
+            data-dt-idx="3"
+            tabindex="0"
+            class="page-link"
+          >
+            Next
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>

@@ -1,0 +1,26 @@
+
+<div>
+    <h5 mat-dialog-title>
+        {{title}}
+    </h5>  
+    <div mat-dialog-content>
+        {{body}}
+    </div>
+    <div mat-dialog-actions class="button-row d-flex justify-content-center">
+        <button type="button" class="btn  btn-primary" mat-button mat-dialog-close="false" (click)="onNoClick()">
+            {{ cancelText }}
+        </button>
+        <button type="button" class="btn btn-danger" mat-button mat-dialog-close="true" (click)="onDelete()">
+            {{ successText }}
+        </button>
+    </div>
+</div>
+
+<!-- <h1 mat-dialog-title>{{title}}</h1>
+<div mat-dialog-content>
+    {{body}}
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>{{ cancelText }}</button>
+  <button mat-button mat-dialog-close cdkFocusInitial>{{ successText }}</button>
+</div> -->
